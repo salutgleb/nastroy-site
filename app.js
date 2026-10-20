@@ -81,6 +81,11 @@
   });
   form.addEventListener('submit', function (ev) { ev.preventDefault(); check(); });
   if (submitBtn) submitBtn.addEventListener('click', check);
+  // поле с ошибкой ставим в середину экрана, чтобы липкая шапка не закрыла подпись над ним
+  function focusField(el) {
+    el.scrollIntoView({block: 'center'});
+    el.focus({preventScroll: true});
+  }
   function check() {
     var name = form.elements.name;
     var contact = form.elements.contact;
@@ -93,9 +98,9 @@
     var okName = setError(name, 'e-name', name.value.trim() ? '' : 'напишите, как к вам обращаться');
     var okContact = setError(contact, 'e-contact', (isEmail || isPhone) ? '' : 'нужен телефон из 10 или 11 цифр или почта с @');
     var okQty = setError(qty, 'e-qty', (Number.isInteger(count) && count >= 1) ? '' : 'укажите целое число подушек, от 1');
-    if (!okName) { name.focus(); return; }
-    if (!okContact) { contact.focus(); return; }
-    if (!okQty) { qty.focus(); return; }
+    if (!okName) { focusField(name); return; }
+    if (!okContact) { focusField(contact); return; }
+    if (!okQty) { focusField(qty); return; }
     // данные никуда не отправляются и не сохраняются: учебный проект
     form.hidden = true;
     done.hidden = false;

@@ -136,8 +136,8 @@ table { font-variant-numeric: tabular-nums; }
 .proof-title { margin-bottom: 12px; }
 .proof-guarantee .proof-title strong { font: 600 var(--t-h2)/1.04 var(--cond); display: block; }
 .steps { margin: 20px 0 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 16px; max-width: 34em; }
-.steps li { counter-increment: s; display: grid; grid-template-columns: 32px 1fr; gap: 12px; align-items: baseline; }
-.steps li::before { content: counter(s); font: 600 2rem/1 var(--cond); color: var(--mark); }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: baseline; }
+.steps li::before { content: counter(s); font: 600 var(--t-h2)/1 var(--cond); color: var(--mark); }
 .band-dark .steps li { color: var(--on-night); }
 
 /* блоки */
@@ -166,7 +166,7 @@ table { font-variant-numeric: tabular-nums; }
 .quotes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px var(--gap); margin-top: clamp(48px, 6vw, 80px); }
 .quotes blockquote { margin: 0; }
 .quotes blockquote p { font: 600 var(--t-h3)/1.25 var(--cond); margin: 0; }
-.quotes .note { grid-column: 1 / -1; margin-top: 8px; }
+.quotes .note { grid-column: 1 / -1; margin-top: 8px; max-width: none; }
 
 /* блок 3: серия высот одним кадром, позы под своими подушками */
 .series img { aspect-ratio: 16 / 6; object-fit: cover; object-position: 50% 58%; }
@@ -198,9 +198,10 @@ caption { text-align: left; font: 600 var(--t-h3)/1.2 var(--cond); padding-botto
 th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
 thead th, thead td { font-size: var(--t-small); font-weight: 600; color: var(--ink-2); border-bottom: 2px solid var(--ink); }
 .spec tbody th { font-weight: 600; white-space: nowrap; }
-.spec td { font: 300 var(--t-h3)/1 var(--xcond); color: var(--ink-2); }
+.spec td { font: 400 var(--t-body)/1.2 var(--text); color: var(--ink-2); }
 .spec tr.is-active th, .spec tr.is-active td { background: var(--bg); }
-.spec tr.is-active th { box-shadow: inset 4px 0 0 var(--mark); }
+.spec tbody th { border-left: 4px solid transparent; }
+.spec tr.is-active th { border-left-color: var(--mark); }
 .how-buy .price { margin: 4px 0 20px; }
 .kit-photo { margin-bottom: 20px; }
 .kit-photo img { aspect-ratio: 3 / 2; object-fit: cover; }
@@ -262,7 +263,7 @@ details p { color: var(--ink-2); padding-bottom: 20px; margin: 0; }
 .field input:not([type="radio"]) { min-height: 52px; padding: 0 16px; border: 1px solid var(--ink-2); border-radius: 0; background: var(--surface);
   color: var(--ink); font: 400 var(--t-body) var(--text); }
 .field input:not([type="radio"]):focus { border-color: var(--ink); }
-.field input[aria-invalid="true"] { border-color: var(--mark-text); box-shadow: inset 0 0 0 1px var(--mark-text); }
+.field input[aria-invalid="true"], .field input[aria-invalid="true"]:focus { border: 2px solid var(--mark-text); padding: 0 15px; }
 .err { color: var(--mark-text); font-size: var(--t-small); font-weight: 600; margin: 0; }
 .hardness-form { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
 .hardness-form legend { grid-column: 1 / -1; }
@@ -278,6 +279,13 @@ details p { color: var(--ink-2); padding-bottom: 20px; margin: 0; }
 .site-footer p { font-size: var(--t-small); color: var(--on-night-2); }
 .site-footer nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 .site-footer nav a { display: inline-flex; align-items: center; min-height: 44px; color: var(--on-night); font-weight: 600; }
+
+@supports (width: round(nearest, 10px, 4px)) {
+  :root { --gutter: round(nearest, clamp(16px, calc(16px + (100vw - 390px) * .0457), 64px), 4px);
+          --gap: round(nearest, clamp(16px, 2.5vw, 32px), 4px); }
+  .block { padding-top: round(nearest, clamp(64px, 8.4vw, 120px), 4px); padding-bottom: round(nearest, clamp(64px, 8.4vw, 120px), 4px); }
+  .band { padding-top: round(nearest, clamp(56px, 7.3vw, 104px), 4px); padding-bottom: round(nearest, clamp(56px, 7.3vw, 104px), 4px); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; }
