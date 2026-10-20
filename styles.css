@@ -145,8 +145,9 @@ table { font-variant-numeric: tabular-nums; }
 .block h2 { margin-bottom: 28px; }
 .block + .block { padding-top: clamp(24px, 3vw, 40px); }
 .about + .block { padding-top: clamp(40px, 5vw, 72px); }
-.fragment { columns: 2; column-gap: var(--gap); max-width: calc(var(--wrap) - 96px); margin-bottom: clamp(36px, 4vw, 56px); }
-.fragment p { max-width: none; }
+.fragment { columns: 2; column-gap: var(--gap); margin-bottom: clamp(36px, 4vw, 56px); }
+/* колонки фрагмента на общей оси половин, строка короче за счёт поля справа в каждой колонке */
+.fragment p { max-width: none; padding-right: 48px; }
 .h3-row article { padding-top: 20px; border-top: 2px solid var(--ink); }
 .band-dark .h3-row article { border-top-color: var(--on-night); }
 .h3-row p { color: var(--ink-2); margin: 0; }
@@ -158,7 +159,7 @@ table { font-variant-numeric: tabular-nums; }
 .about-lead { font: 600 var(--t-h3)/1.35 var(--text); }
 
 /* блок 2: доля отзывов про запах */
-.ratio { margin: 0 0 clamp(40px, 5vw, 64px); max-width: 760px; }
+.ratio { margin: 0 0 clamp(40px, 5vw, 64px); max-width: 864px; }
 .ratio .num { margin-bottom: 16px; }
 .ratio-bar { height: 12px; background: var(--line); }
 .ratio-bar span { display: block; height: 100%; background: var(--mark); }
@@ -240,7 +241,7 @@ legend { font-weight: 600; margin-bottom: 12px; padding: 0; }
 .compare .no .mark { border: 1px solid var(--on-night-2); }
 
 /* вопросы: колонка 960 px от левой оси страницы */
-.faq-groups { max-width: 960px; }
+.faq-groups { max-width: 864px; }
 .faq-group { margin-top: 48px; }
 .faq-group h3 { font: 600 var(--t-h3)/1.2 var(--cond); color: var(--ink-2); }
 details { border-top: 1px solid var(--line); }
@@ -316,15 +317,18 @@ details p { color: var(--ink-2); padding-bottom: 20px; margin: 0; }
   .proof:not(.proof-guarantee) { grid-column: 1 / -1; }
   .facts .fact { padding-bottom: 20px; }
   .fragment { columns: 1; }
+  .fragment p { padding-right: 0; }
   .series img { aspect-ratio: 16 / 9; }
   .series-captions { gap: 0; margin-top: 8px; }
   .series-captions h3 { padding: 12px 0; border-top-width: 1px; }
   .opt-compact { margin-left: 0; margin-top: -1px; }
   th, td { padding: 12px 8px; }
   .compare thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .compare tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; border-bottom: 1px solid var(--line-night); padding: 12px 0; }
+  .compare tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; align-items: start; border-bottom: 1px solid var(--line-night); padding: 12px 0; }
   .compare th[scope="row"] { grid-column: 1 / -1; width: auto; padding: 0 0 8px; border: 0; }
-  .compare td { border: 0; padding: 0; }
+  .compare td { border: 0; padding: 0; display: grid; grid-template-columns: 12px minmax(0, 1fr); column-gap: 12px; align-items: baseline; }
+  .compare td::before { grid-column: 1 / -1; }
+  .compare .mark { margin-right: 0; }
   .compare td::before { content: attr(data-label); display: block; font-size: var(--t-small); font-weight: 400; color: var(--on-night-2); margin-bottom: 4px; }
   .site-menu { left: var(--gutter); right: var(--gutter); }
 }
