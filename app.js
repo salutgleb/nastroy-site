@@ -17,7 +17,8 @@
     document.addEventListener('keydown', function (ev) {
       if (ev.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') { closeMenu(); toggle.focus(); }
     });
-    document.addEventListener('click', function (ev) {
+    // pointerdown, а не click: Safari на iPhone не доносит click от нажатия по обычному тексту до document
+    document.addEventListener('pointerdown', function (ev) {
       if (!ev.target.closest('.site-menu, .menu-toggle')) closeMenu();
     });
   }
@@ -62,15 +63,18 @@
   if (!form || !done) return;
   function setError(input, errId, text) {
     var err = document.getElementById(errId);
+    // подсказка под подписью (data-hint) остаётся в описании поля и при ошибке, и без неё
+    var hint = input.getAttribute('data-hint') || '';
     if (text) {
       err.textContent = 'Ошибка: ' + text;
       err.hidden = false;
       input.setAttribute('aria-invalid', 'true');
-      input.setAttribute('aria-describedby', errId);
+      input.setAttribute('aria-describedby', (errId + ' ' + hint).trim());
     } else {
       err.hidden = true;
       input.removeAttribute('aria-invalid');
-      input.removeAttribute('aria-describedby');
+      if (hint) input.setAttribute('aria-describedby', hint);
+      else input.removeAttribute('aria-describedby');
     }
     return !text;
   }
@@ -86,6 +90,10 @@
     el.scrollIntoView({block: 'center'});
     el.focus({preventScroll: true});
   }
+  // кнопки «Заказать» после отправки снова открывают чистую форму
+  document.querySelectorAll('a[href="#order"]').forEach(function (a) {
+    a.addEventListener('click', function () { if (!done.hidden) { done.hidden = true; form.hidden = false; } });
+  });
   function check() {
     var name = form.elements.name;
     var contact = form.elements.contact;
@@ -93,7 +101,8 @@
     var value = contact.value.trim();
     var digits = value.replace(/\D/g, '').length;
     var isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-    var isPhone = /^[\d\s()+-]+$/.test(value) && digits >= 10 && digits <= 11;
+    // типографские дефисы и тире из мессенджеров (U+2010–U+2015, U+2212) и точки тоже разделители номера
+    var isPhone = /^[\d\s()+\-\u2010-\u2015\u2212.]+$/.test(value) && digits >= 10 && digits <= 11;
     var count = Number(qty.value);
     var okName = setError(name, 'e-name', name.value.trim() ? '' : 'напишите, как к вам обращаться');
     var okContact = setError(contact, 'e-contact', (isEmail || isPhone) ? '' : 'нужен телефон из 10 или 11 цифр или почта с @');
@@ -101,7 +110,10 @@
     if (!okName) { focusField(name); return; }
     if (!okContact) { focusField(contact); return; }
     if (!okQty) { focusField(qty); return; }
-    // данные никуда не отправляются и не сохраняются: учебный проект
+    // данные никуда не отправляются и не сохраняются: учебный проект; поля очищаются, чтобы ничего не осталось на странице
+    form.reset();
+    var picked = form.querySelector('input[name="hardness"]:checked');
+    if (picked) sync(picked, 'hardness-preview');
     form.hidden = true;
     done.hidden = false;
     done.focus();
