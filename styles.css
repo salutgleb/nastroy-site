@@ -188,7 +188,6 @@ table { font-variant-numeric: tabular-nums; }
 .how-layers { grid-area: layers; }
 .how-buy { grid-area: buy; }
 /* колонка заказа липнет только там, где целиком помещается в окно: иначе кнопка заказа уходит за нижний край */
-@media (min-width: 1101px) and (min-height: 1000px) { .how-buy { position: sticky; top: 88px; } }
 .how-fill { grid-area: fill; margin-top: clamp(40px, 5vw, 56px); padding-top: 24px; border-top: 2px solid var(--ink); }
 .how-layers .segmented { margin: 4px 0 24px; }
 .section-svg { width: 100%; max-width: 600px; height: auto; display: block; }
@@ -210,6 +209,9 @@ thead th, thead td { font-size: var(--t-small); font-weight: 600; color: var(--i
 .how-buy .price { margin: 4px 0 20px; }
 .kit-photo { margin-bottom: 20px; }
 .kit-photo img { aspect-ratio: 3 / 2; object-fit: cover; }
+/* колонка цены без прилипания: с макетом коробки она выше экрана */
+.box-photo { margin: 28px 0 24px; }
+.box-photo img { aspect-ratio: 4 / 3; object-fit: cover; }
 fieldset { border: 0; margin: 0 0 20px; padding: 0; min-width: 0; }
 legend { font-weight: 600; margin-bottom: 12px; padding: 0; }
 .hardness { display: grid; gap: 0; }
