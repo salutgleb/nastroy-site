@@ -125,6 +125,7 @@ table { font-variant-numeric: tabular-nums; }
 .fact .num { display: flex; align-items: baseline; gap: 8px; margin-bottom: 16px; }
 .fact .num small { font: 400 var(--t-h3)/1 var(--cond); }
 .fact p:not(.num) { color: var(--ink-2); margin: 0; }
+.fact a { white-space: nowrap; }
 
 /* графитовые полосы: гарантия и сравнение */
 .band { padding-top: clamp(56px, 7.3vw, 104px); padding-bottom: clamp(56px, 7.3vw, 104px); }
