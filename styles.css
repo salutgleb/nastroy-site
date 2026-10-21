@@ -175,7 +175,9 @@ table { font-variant-numeric: tabular-nums; }
 .series img { aspect-ratio: 16 / 6; object-fit: cover; object-position: 50% 58%; }
 .series { margin-bottom: clamp(40px, 5vw, 64px); }
 .series-labels { margin-top: 16px; }
-.series-labels li { padding-top: 12px; border-top: 2px solid var(--ink); font-weight: 600; }
+.series-labels li { padding-top: 12px; border-top: 2px solid var(--ink); }
+.series-labels li b { display: block; font-weight: 600; }
+.series-labels li span { display: block; color: var(--ink-2); }
 .poses-link { margin: 20px 0 0; }
 .modules { margin-top: clamp(48px, 6vw, 80px); }
 .module { padding-top: 20px; border-top: 1px solid var(--line); }
@@ -231,6 +233,8 @@ legend { font-weight: 600; margin-bottom: 12px; padding: 0; }
 
 /* блок 5 */
 .reviews-grid article { padding-top: 20px; border-top: 2px solid var(--ink); }
+/* слева два коротких H3 друг под другом, справа колонка с «7 065» и таблицей: без пустот под короткими колонками */
+.reviews-pair { display: grid; gap: clamp(32px, 4vw, 48px); align-content: start; }
 .big-num { margin: 4px 0 16px; }
 .answers td:last-child { font-weight: 600; }
 .answers tbody th { font-weight: 400; }
@@ -313,7 +317,6 @@ details p { color: var(--ink-2); padding-bottom: 20px; margin: 0; }
   .proof-guarantee { grid-column: 1 / -1; grid-row: auto; }
   .proof:not(.proof-guarantee) { grid-column: span 6; }
   .reviews-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .reviews-count { grid-column: 1 / -1; }
 }
 
 /* телефон */
